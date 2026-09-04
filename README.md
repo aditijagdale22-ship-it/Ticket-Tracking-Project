@@ -24,7 +24,7 @@ Data lives in **Google Sheets**. The UI is Vite + React. There is no Convex or s
 
 ## Identity
 
-- First visit: **Who’s looking?** Enter a display name or pick a dummy assignee chip.
+- First visit: enter a **display name** and **Enter the board**. There is no password.
 - The name is stored in the `users` sheet and in the browser (`localStorage`).
 - There is no authentication provider. Anyone who knows the app URL can join as any name.
 - **Switch person** signs out of that display name.

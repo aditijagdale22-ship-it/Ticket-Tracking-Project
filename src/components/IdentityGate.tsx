@@ -1,35 +1,25 @@
 import { FormEvent, useState } from "react";
-import { useQuery } from "../data/hooks";
-import { api } from "../data/api";
 
 type Props = {
   onJoin: (name: string) => Promise<void>;
 };
 
 export default function IdentityGate({ onJoin }: Props) {
-  const people = useQuery<Array<{ _id: string; name: string }>>(
-    api.users.listPublic,
-    {},
-  );
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
-  async function submit(displayName: string) {
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
     setError(null);
     setPending(true);
     try {
-      await onJoin(displayName);
+      await onJoin(name);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not join");
     } finally {
       setPending(false);
     }
-  }
-
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault();
-    await submit(name);
   }
 
   return (
@@ -51,46 +41,10 @@ export default function IdentityGate({ onJoin }: Props) {
             Tickets used to live in chats and docs. Event Board keeps a single
             pipeline — New through Done — with a full audit trail on every change.
           </p>
-          <ol className="mt-8 space-y-3 text-sm text-ink-soft">
-            <li className="flex gap-3">
-              <span className="font-mono text-ember">01</span>
-              Linear pipeline, not a generic kanban dump
-            </li>
-            <li className="flex gap-3">
-              <span className="font-mono text-ember">02</span>
-              Dropdown status updates, synced live
-            </li>
-            <li className="flex gap-3">
-              <span className="font-mono text-ember">03</span>
-              Sprint on top, backlog underneath
-            </li>
-          </ol>
         </div>
 
         <div className="rounded-3xl border border-rule bg-paper-raised p-8 shadow-[0_20px_60px_-32px_rgba(28,25,23,0.45)]">
-          <h2 className="font-display text-2xl">Who’s looking?</h2>
-          <p className="mt-1 text-sm text-ink-soft">
-            Pick an existing name or join as yourself. Changes are attributed to
-            this identity.
-          </p>
-
-          {people && people.length > 0 && (
-            <div className="mt-5 flex flex-wrap gap-2">
-              {people.map((person) => (
-                <button
-                  key={person._id}
-                  type="button"
-                  disabled={pending}
-                  onClick={() => void submit(person.name)}
-                  className="rounded-full border border-rule bg-white px-3 py-1.5 text-sm hover:border-ink/30"
-                >
-                  {person.name}
-                </button>
-              ))}
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <label className="text-sm font-medium" htmlFor="display-name">
               Display name
             </label>
