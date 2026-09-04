@@ -8,3 +8,4 @@ convex
 .convex
 .vite
 tsconfig.tsbuildinfo
+dist-server
