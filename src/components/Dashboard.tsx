@@ -49,7 +49,7 @@ export default function Dashboard({ actorId, actorName, onSignOut }: Props) {
   return (
     <div className="flex h-full min-h-0">
       <Sidebar actorId={actorId} actorName={actorName} onSignOut={onSignOut} />
-      <main className="flex min-w-0 flex-1 flex-col">
+      <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
         <Routes>
           <Route
             path="/"

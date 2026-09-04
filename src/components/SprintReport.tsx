@@ -99,7 +99,7 @@ export default function SprintReport({
   const health = HEALTH_COPY[stats.health];
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col bg-[#f4f5f7]">
+    <div className="bg-[#f4f5f7] pb-16">
       <header className="border-b border-stone-200 bg-white px-6 py-5">
         <p className="text-xs text-stone-500">
           Spaces / {teamName} / Reports
@@ -142,7 +142,7 @@ export default function SprintReport({
         </p>
       </header>
 
-      <div className="min-h-0 flex-1 overflow-auto px-6 py-5">
+      <div className="px-6 py-5">
         <section className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
             label="Sprint health"
